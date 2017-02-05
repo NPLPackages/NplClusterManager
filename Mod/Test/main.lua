@@ -1,8 +1,7 @@
 --[[
-Title: Testing every aspect of Mod interface
-Author(s):  LiXizhi
-Date: 2015.10
-Desc: This is also a greate demo of mod interface. 
+Author(s):  lizhiqiang
+Date: 2017.1.28
+Desc: This is also a test of NPL cluster manager. 
 use the lib:
 ------------------------------------------------------------
 NPL.load("(gl)Mod/Test/main.lua");
@@ -10,7 +9,8 @@ local Test = commonlib.gettable("Mod.Test");
 ------------------------------------------------------------
 ]]
 NPL.load("(gl)Mod/Test/main.lua");
-local Test = commonlib.gettable("Mod.Test");
+--local Test = commonlib.gettable("Mod.Test");
+local Test = commonlib.inherit(commonlib.gettable("Mod.ModBase"),commonlib.gettable("Mod.Test"));
 
 function Test:ctor()
 end
@@ -36,7 +36,7 @@ function Test:OnLogin()
 end
 
 function Test:OnWorldLoad()
-	_guihelper.MessageBox("Directory is not a valid minecraft world directory, please select a valid folder.");
+	_guihelper.MessageBox("asd");
 end
 
 function Test:OnLeaveWorld()

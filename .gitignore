@@ -1,4 +1,5 @@
 .vs
+npl_packages
 *.db
 *.opendb
 *.user
@@ -7,3 +8,4 @@
 *.log
 *.txt
 Debug
+obj

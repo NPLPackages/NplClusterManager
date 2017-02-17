@@ -41,10 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="script/**" />
-	<Content Include="Mod/**" />
+    <Content Include="Mod/Test\main.lua" />
   </ItemGroup>
   <ItemGroup>
     <None Include="InstallPackages.bat" />
+    <None Include="Mod\Test\NodeClient.lua" />
+    <None Include="Mod\Test\NodeServer.lua" />
+    <None Include="Mod\Test\Test.lua" />
     <None Include="README.md" />
     <None Include="Run.bat" />
   </ItemGroup>

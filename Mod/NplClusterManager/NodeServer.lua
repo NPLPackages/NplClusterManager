@@ -28,12 +28,12 @@ local function activate()
 	if(not isServerInitialized) then 
 		isServerInitialized = true;
 		InitServer();
-	
-	elseif(msg and msg.type) then
-		LOG.std(nil, "info", "msg received");
-		--_guihelper.MessageBox(msg)
+		if(msg and msg.type) then
+			LOG.std(nil, "info", "msg received");
+			--_guihelper.MessageBox(msg)
 
-		echo(msg);
+			echo(msg);
+		end
 	end 
 end
 NPL.this(activate)

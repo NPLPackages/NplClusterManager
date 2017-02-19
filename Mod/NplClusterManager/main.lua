@@ -1,12 +1,12 @@
 --[[
-Title: Testing every aspect of Mod interface
-Author(s):  LiXizhi
-Date: 2015.10
-Desc: This is also a greate demo of mod interface. 
+Title: NplClusterManager
+Author(s):  lizhiqiang
+Date: 2017.2.10
+Desc: 
 use the lib:
 ------------------------------------------------------------
-NPL.load("(gl)Mod/Test/main.lua");
-local Test = commonlib.gettable("Mod.Test");
+NPL.load("(gl)Mod/NplClusterManager/main.lua");
+local Test = commonlib.gettable("Mod.NplClusterManager");
 ------------------------------------------------------------
 ]]
 
@@ -36,14 +36,14 @@ end
 
 -- called when a new world is loaded. 
 function NplClusterManager:OnWorldLoad()
-	LOG.std(nil, "info", "NplClusterManager", "Mod test on world loaded");
-	_guihelper.MessageBox("asd");
-	--NPL.activate("");
+	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on world loaded");
+	_guihelper.MessageBox("asdasd");
+	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
 end
 
 -- called when a world is unloaded. 
 function NplClusterManager:OnLeaveWorld()
-	LOG.std(nil, "info", "NplClusterManager", "Mod test on leave world");
+	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on leave world");
 	
 end
 

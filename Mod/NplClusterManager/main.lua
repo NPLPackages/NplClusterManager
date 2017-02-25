@@ -39,6 +39,12 @@ function NplClusterManager:OnWorldLoad()
 	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on world loaded");
 	_guihelper.MessageBox("asdasd");
 	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
+	
+	--NPL.activate("Mod/NplClusterManager/NodeServer.lua");
+	
+	NPL.load("(gl)script/apps/WebServer/WebServer.lua");
+	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8090);
+	ParaGlobal.ShellExecute("open", "http://localhost:8090/console", "", "", 1);
 end
 
 -- called when a world is unloaded. 

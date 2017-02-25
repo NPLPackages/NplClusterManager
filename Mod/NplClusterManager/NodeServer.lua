@@ -15,10 +15,10 @@ local isServerInitialized;
 
 local function InitServer()
 	NPL.AddPublicFile(server_file, 1);
-	NPL.StartNetServer("127.0.0.1", "90001");
+	NPL.StartNetServer("127.0.0.1", "9001");
 	local node = NPL.CreateRuntimeState("node1", 0);
 	node:Start();
-
+	
 	LOG.std(nil, "info", "Server", "Server starts");
 end
 
@@ -28,12 +28,14 @@ local function activate()
 	if(not isServerInitialized) then 
 		isServerInitialized = true;
 		InitServer();
-		if(msg and msg.type) then
+		
+	end 
+
+	if(msg and msg.type) then
 			LOG.std(nil, "info", "msg received");
 			--_guihelper.MessageBox(msg)
 
 			echo(msg);
-		end
-	end 
+	end
 end
 NPL.this(activate)

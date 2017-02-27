@@ -15,6 +15,7 @@ local isServerInitialized;
 
 local function InitServer()
 	NPL.AddPublicFile(server_file, 1);
+	NPL.AddPublicFile(client_file, 1);
 	NPL.StartNetServer("127.0.0.1", "9001");
 	local node = NPL.CreateRuntimeState("node1", 0);
 	node:Start();
@@ -36,6 +37,7 @@ local function activate()
 			--_guihelper.MessageBox(msg)
 
 			echo(msg);
+			
 	end
 end
 NPL.this(activate)

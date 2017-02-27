@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="InstallPackages.bat" />
+    <None Include="Mod\NplClusterManager\LocalResourceInfo.lua" />
     <None Include="Mod\NplClusterManager\NodeClient.lua" />
     <None Include="Mod\NplClusterManager\NodeServer.lua" />
     <None Include="Mod\NplClusterManager\Test.lua" />

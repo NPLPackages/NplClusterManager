@@ -48,6 +48,7 @@
     <None Include="Mod\NplClusterManager\LocalResourceInfo.lua" />
     <None Include="Mod\NplClusterManager\NodeClient.lua" />
     <None Include="Mod\NplClusterManager\NodeServer.lua" />
+    <None Include="Mod\NplClusterManager\CmdRunner.lua" />
     <None Include="Mod\NplClusterManager\Test.lua" />
     <None Include="README.md" />
     <None Include="Run.bat" />

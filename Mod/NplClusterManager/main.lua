@@ -12,6 +12,9 @@ local Test = commonlib.gettable("Mod.NplClusterManager");
 
 local NplClusterManager = commonlib.inherit(commonlib.gettable("Mod.ModBase"),commonlib.gettable("Mod.NplClusterManager"));
 
+local server_file = "Mod/NplClusterManager/NodeServer.lua";
+local client_file = "Mod/NplClusterManager/NodeClient.lua";
+
 function NplClusterManager:ctor()
 end
 
@@ -40,11 +43,9 @@ function NplClusterManager:OnWorldLoad()
 	_guihelper.MessageBox("asdasd");
 	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
 	
-	--NPL.activate("Mod/NplClusterManager/NodeServer.lua");
+	NPL.activate(server_file);
+
 	
-	NPL.load("(gl)script/apps/WebServer/WebServer.lua");
-	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8090);
-	ParaGlobal.ShellExecute("open", "http://localhost:8090/console", "", "", 1);
 end
 
 -- called when a world is unloaded. 

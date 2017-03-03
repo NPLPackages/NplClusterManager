@@ -11,6 +11,7 @@ local Test = commonlib.gettable("Mod.NplClusterManager");
 ]]
 
 local NplClusterManager = commonlib.inherit(commonlib.gettable("Mod.ModBase"),commonlib.gettable("Mod.NplClusterManager"));
+local server_file = "Mod/NplClusterManager/NodeServer.lua";
 
 function NplClusterManager:ctor()
 end
@@ -39,6 +40,10 @@ function NplClusterManager:OnWorldLoad()
 	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on world loaded");
 	_guihelper.MessageBox("asdasd");
 	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
+
+	NPL.AddPublicFile(server_file, 10001);
+	NPL.activate("mod/NplClusterManager/NodeServer.lua");
+
 end
 
 -- called when a world is unloaded. 

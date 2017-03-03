@@ -14,8 +14,8 @@ local client_file = "Mod/NplClusterManager/NodeClient.lua";
 local isServerInitialized;
 
 local function InitServer()
-	NPL.AddPublicFile(server_file, 1);
-	NPL.StartNetServer("127.0.0.1", "90001");
+	--NPL.AddPublicFile(server_file, 10001);
+	--NPL.StartNetServer("127.0.0.1", "8099");
 	local node = NPL.CreateRuntimeState("node1", 0);
 	node:Start();
 
@@ -25,15 +25,17 @@ end
 local function activate()
 	--_guihelper.MessageBox();
 
+	echo({"11111111111  server", })
 	if(not isServerInitialized) then 
 		isServerInitialized = true;
 		InitServer();
-		if(msg and msg.type) then
-			LOG.std(nil, "info", "msg received");
-			--_guihelper.MessageBox(msg)
-
-			echo(msg);
-		end
+		
 	end 
+	if(msg and msg.type) then
+		LOG.std(nil, "info", "msg received");
+		--_guihelper.MessageBox(msg)
+
+		echo(msg);
+	end
 end
 NPL.this(activate)

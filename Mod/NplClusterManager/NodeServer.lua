@@ -12,30 +12,27 @@ local server_file = "Mod/NplClusterManager/NodeServer.lua";
 local client_file = "Mod/NplClusterManager/NodeClient.lua";
 
 local isServerInitialized;
+local RequestMethod_Get = "GET";
+local RequestMethod_Post = "POST";
+local RequestType_Res = "res";
+local RequestType_Cmd = "cmd";
 
 local function InitServer()
-	--NPL.AddPublicFile(server_file, 10001);
-	--NPL.StartNetServer("127.0.0.1", "8099");
-	local node = NPL.CreateRuntimeState("node1", 0);
-	node:Start();
 
+	NPL.AddPublicFile(server_file, 1);
+	NPL.load("(gl)script/apps/WebServer/WebServer.lua");
+	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8090);
+	ParaGlobal.ShellExecute("open", "http://localhost:8090/console", "", "", 1);
+	
 	LOG.std(nil, "info", "Server", "Server starts");
 end
 
 local function activate()
-	--_guihelper.MessageBox();
 
 	echo({"11111111111  server", })
 	if(not isServerInitialized) then 
 		isServerInitialized = true;
 		InitServer();
-		
-	end 
-	if(msg and msg.type) then
-		LOG.std(nil, "info", "msg received");
-		--_guihelper.MessageBox(msg)
 
-		echo(msg);
-	end
 end
 NPL.this(activate)

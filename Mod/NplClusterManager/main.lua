@@ -10,7 +10,10 @@ local Test = commonlib.gettable("Mod.NplClusterManager");
 ------------------------------------------------------------
 ]]
 
+NPL.load("(gl)Mod/NplClusterManager/main.lua");
 local NplClusterManager = commonlib.inherit(commonlib.gettable("Mod.ModBase"),commonlib.gettable("Mod.NplClusterManager"));
+NPL.load("(gl)Mod/NplClusterManager/LocalResourceInfo.lua");
+local LocalResourceInfo = commonlib.gettable("Mod.NplClusterManager.LocalResourceInfo");
 
 local server_file = "Mod/NplClusterManager/NodeServer.lua";
 local client_file = "Mod/NplClusterManager/NodeClient.lua";
@@ -40,11 +43,12 @@ end
 -- called when a new world is loaded. 
 function NplClusterManager:OnWorldLoad()
 	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on world loaded");
-	_guihelper.MessageBox("asdasd");
+	--_guihelper.MessageBox("asdasd");
 	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
 	
-	NPL.activate(server_file);
-
+	--NPL.activate(server_file);
+	--LocalResourceInfo.getLocalResourceInfo();
+	--LocalResourceInfo.Test();
 	
 end
 

@@ -15,11 +15,10 @@ local isClientInitialized;
 
 local function InitClient()
 	NPL.AddPublicFile(client_file, 1);
-	NPL.StartNetServer("0", "0");
-	NPL.AddNPLRuntimeAddress({host = "127.0.0.1", port = "90001", nid = "testServer"});
+	NPL.AddNPLRuntimeAddress({host = "127.0.0.1", port = "8090", nid = "testServer"});
 	LOG.std(nil, "info", "Client", "Client starts");
 
-	 
+	
 	while( NPL.activate(string.format("(%s)testServer:Mod/NplClusterManager/NodeServer.lua", "node1"), 
             {type = "res", data="from client"}) ~=0 ) do
             -- if can not send message, try again.

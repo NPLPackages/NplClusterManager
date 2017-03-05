@@ -40,7 +40,7 @@ end
 function NplClusterManager:OnWorldLoad()
 	LOG.std(nil, "info", "NplClusterManager", "Mod NplClusterManager on world loaded");
 	--_guihelper.MessageBox("asdasd");
-	--NPL.activate("Mod/NplClusterManager/NodeClient.lua");
+	--NPL.activate("Mod/NplClusterManager/NodeServer.lua");
 
 end
 

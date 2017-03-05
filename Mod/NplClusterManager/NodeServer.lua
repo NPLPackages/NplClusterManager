@@ -29,10 +29,13 @@ end
 
 local function activate()
 
-	echo({"11111111111  server", })
 	if(not isServerInitialized) then 
 		isServerInitialized = true;
 		InitServer();
+	end
+	if(msg) then
+		echo(msg);
+	end
 
 end
 NPL.this(activate)

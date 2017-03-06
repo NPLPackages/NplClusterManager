@@ -21,9 +21,8 @@ local function InitServer()
 
 	NPL.AddPublicFile(server_file, 1);
 	NPL.load("(gl)script/apps/WebServer/WebServer.lua");
-	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8090);
-	ParaGlobal.ShellExecute("open", "http://localhost:8090/console", "", "", 1);
-	
+	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8099);
+	ParaGlobal.ShellExecute("open", "http://localhost:8099/cluster", "", "", 1);
 	LOG.std(nil, "info", "Server", "Server starts");
 end
 

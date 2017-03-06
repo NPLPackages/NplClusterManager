@@ -31,6 +31,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="script\apps\WebServer\admin\wp-content\pages\cluster\controller\" />
+    <Folder Include="script\apps\WebServer\admin\wp-content\pages\cluster\template\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />
@@ -47,6 +49,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="script\apps\WebServer\admin\wp-content\pages\cluster.page" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

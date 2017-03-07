@@ -1,0 +1,10 @@
+﻿<div>
+    <div style="margin:20px 0px">
+        <a ng-click="getNodeList()"><b>节点列表</b></a>
+        <button class="btn btn-primary" ng-click="addNode()" style="float:right;">添加</button>
+    </div>
+
+    <li ng-repeat="x in nodelist" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="myTest()">节点-{{x}}</li>
+    <p>{{nodelist}}</p>
+    
+</div>

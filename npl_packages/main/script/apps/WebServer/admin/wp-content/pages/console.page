@@ -12,7 +12,7 @@ Print all url params
 -- print request
 - ajax/console?action=printrequest
 ]]
-NPL.load("(gl)script/ide/System/Compiler/nplc.lua");
+NPL.load("(gl)script/ide/System/Compiler/nplc.lua"); 
 if(not is_admin()) then
   exit("access denied")
 end

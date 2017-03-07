@@ -31,8 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="script\apps\WebServer\admin\wp-content\pages\cluster\controller\" />
-    <Folder Include="script\apps\WebServer\admin\wp-content\pages\cluster\template\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitattributes" />

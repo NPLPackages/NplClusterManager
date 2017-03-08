@@ -22,8 +22,26 @@
                 $uibModal.open({
                     templateUrl: "/wp-content/pages/cluster/templates/addNode.html",
                     controller: "addNodeController",
+                    resolve: {//这是一个入参,这个很重要,它可以把主控制器中的参数传到模态框控制器中
+                        items: function () {//items是一个回调函数
+                            $scope.getNodeList();//这个值会被模态框的控制器获取到
+                        }
+                    }
                 });
+
+                
             }
+
+            $scope.getResInfo = function () {
+                var url = "ajax/cluster?action=cluster_getres";
+                $http.get(url).then(function (response) {
+                    $scope.satus = response.data.info;
+                })
+            }
+            $scope.getResInfo();
+            
+            
+            
         }
 
     })
@@ -33,40 +51,28 @@
             $uibModalInstance.dismiss('cancel');
         }
         $scope.newIP = "";
-        $scope.progressText = "asd";
+        $scope.progressText = "请输入新节点的IP地址";
         $scope.test = function () {
             alert(123);
         }
 
         $scope.addNodeSubmit = function () {
             if ($scope.newIP == "") {
-                alert("请输入新节点的IP地址！");
+                alert("IP地址不能为空！");
             }else{
-                $http.put("/ajax/cluster?action=cluster_addNode", { text: $scope.newIP }).done(function (data) {
-                    alert(data);
+                $http.put("/ajax/cluster?action=cluster_addnode", { text: $scope.newIP }).then(function (response) {
+                    if (response) {
+                        $scope.progressText = response.data.result;
+                        if (response.data.result == "节点添加成功") {
+                            $scope.cancel();
+                        } 
+                    }
                 })
-
-                $http({
-                    method: 'PUT',
-                    url: uri,
-                    data: {
-                        'message': 'file upload',
-                        'content': fileContent
-                    }
-                }).then(function (response) {
-                    if (callback) {
-                        callback(true);
-                    }
-                }).catch(function (response) {
-                    if (callback) {
-                        callback(false);
-                    }
-                });
             }
             
         }
 
-        $
+        
     })
 
 

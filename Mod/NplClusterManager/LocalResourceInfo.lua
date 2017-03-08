@@ -24,8 +24,8 @@ end
 
 function LocalResourceInfo:Test()
 
-	LOG.std(nil, "info", "cpu", "get cpu info");
-	os.run("@ wmic cpu list", 
+	LOG.std(nil, "info", "cpu", "get cpu info"); 
+	os.run("echo asd", 
 	function(err, result) 
 		if(result) then 
 			echo(result);

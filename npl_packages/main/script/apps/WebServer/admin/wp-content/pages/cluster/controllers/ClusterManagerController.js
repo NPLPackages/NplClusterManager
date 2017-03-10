@@ -4,19 +4,23 @@
         templateUrl: "/wp-content/pages/cluster/templates/index.html",
         controller: function ($scope, $http, $uibModal) {
             $scope.satus = "ok";
-            $scope.nodelist = "";
+            $scope.nodelist = new Array();
 
             $scope.myTest = function () {
-                alert($scope.satus);
+                alert("asd");
             }
 
             $scope.getNodeList = function(){
                 var url = "ajax/cluster?action=cluster_get_nodelist";
                 $http.get(url).then(function (response) {
-                    $scope.nodelist = response.data.nodelist;
+                    //$scope.nodelist =response.data;
+                    alert(response.data.result[0].ip);
+                    for (var i = 0; i < response.data.result.length; i++) {
+                        $scope.nodelist.push(response.data.result[i]);
+                    }
                 })
             }
-            $scope.getNodeList();
+            //$scope.getNodeList();
 
             $scope.addNode = function(){
                 $uibModal.open({
@@ -38,7 +42,7 @@
                     $scope.satus = response.data.info;
                 })
             }
-            $scope.getResInfo();
+            //$scope.getResInfo();
             
             
             

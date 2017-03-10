@@ -2,10 +2,14 @@
     <div style="margin:20px 0px">
         <a ng-click="getNodeList()"><b>节点列表</b></a>
         <button class="btn btn-primary" ng-click="addNode()" style="float:right;">添加</button>
+        <button class="btn btn-primary" ng-click="getNodeList()" style="float:right;">list</button>
+        <button class="btn btn-primary" ng-click="getResInfo()" style="float:right;">res</button>
+        <button class="btn btn-primary" ng-click="myTest()" style="float:right;">asd</button>
     </div>
 
-    <li ng-repeat="x in nodelist" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="myTest()">节点-{{x}}</li>
+    <li ng-repeat="x in nodelist" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="myTest()">节点-{{x.ip}}</li>
     <p>{{nodelist}}</p>
     <p>{{satus}}</p>
+
     
 </div>

@@ -49,6 +49,7 @@
     <None Include="Mod\NplClusterManager\LocalResourceInfo.lua" />
     <None Include="Mod\NplClusterManager\memory_usage.sh" />
     <None Include="Mod\NplClusterManager\NodeClient.lua" />
+    <None Include="Mod\NplClusterManager\NodeDB.lua" />
     <None Include="Mod\NplClusterManager\NodeServer.lua" />
     <None Include="Mod\NplClusterManager\CmdRunner.lua" />
     <None Include="Mod\NplClusterManager\Test.lua" />

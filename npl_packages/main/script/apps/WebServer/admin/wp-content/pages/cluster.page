@@ -16,30 +16,57 @@ Print all url params
 NPL.load("(gl)Mod/NplClusterManager/LocalResourceInfo.lua");
 local LocalResourceInfo = commonlib.gettable("Mod.NplClusterManager.LocalResourceInfo");
 
-local NodeList = {"127.0.0.1", "127.0.0.2"};
+NPL.load("(gl)script/ide/System/Database/TableDatabase.lua");
+local TableDatabase = commonlib.gettable("System.Database.TableDatabase");
+local db = TableDatabase:new():connect("temp/mydatabase/", function() end);
+
+local NodeList = {};
 local newIP = request:get("text");
 local function getNewIP()
 	return newIP or "";
 end
 
+local function getNodeList(re)
+	db.Node:find({ip="127.0.0.1",}, function(err, rows) 
+		re = rows;
+		echo(rows);
+	end);
+	return re;
+end
+
 if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_nodelist', function()
 		LOG.std(nil, "info", "clusrter", "cluster get nodelist");
-		wp_send_json({nodelist = NodeList}, true);
+		db:EnableSyncMode(true);
+		local err, rows = db.Node:find({});
+		echo(err);
+		echo(rows);
+		wp_send_json({result = rows}, true);
 	end)
 
 	add_action('wp_ajax_cluster_addnode', function()
 		LOG.std(nil, "info", "clusrter", "cluster add node");
-		--AddNodeWithResult(output);
-		table.insert(NodeList, newIP);
-		if(newIP == "123") then 
-			wp_send_json({result = "节点添加成功"}, true);
-		else
-			wp_send_json({result = "节点添加失败，请确认后重试"}, true);
-		end
-		LOG.std(nil, "info", "clusrter",  NodeList);
-		--response:status(200):send({"please check log.txt"}, true);
-		
+		db.Node:find({ip=newIP,}, function(err, rows)
+			if(#rows == 0) then 
+				db.Node:insertOne(nil, {ip=newIP,}, function(err, data)
+					if(#data ~= 0) then 
+						echo("节点添加成功");
+						wp_send_json({result = "节点添加成功"}, true);
+					else
+						echo("节点添加失败，请确认后重试");
+						wp_send_json({result = "节点添加失败，请确认后重试"}, true);
+					end
+				end);
+			else
+				echo("该节点已存在");
+				wp_send_json({result = "该节点已存在"}, true);
+			end
+		end)
+
+		db:EnableSyncMode(true);
+		local err, rows = db.Node:find({ip=newIP});
+		if(#rows) then 
+
     end)
 
 	add_action('wp_ajax_cluster_getres', function()

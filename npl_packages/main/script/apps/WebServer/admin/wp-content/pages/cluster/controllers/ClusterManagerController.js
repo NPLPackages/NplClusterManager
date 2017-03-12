@@ -3,48 +3,63 @@
     .component("clusterMain", {
         templateUrl: "/wp-content/pages/cluster/templates/index.html",
         controller: function ($scope, $http, $uibModal) {
-            $scope.satus = "ok";
+            $scope.satus = "节点";
+            $scope.info = "";
             $scope.nodelist = new Array();
 
-            $scope.myTest = function () {
-                alert("asd");
+            $scope.myTest = function (e) {
+                //alert("asd");
+                //if(!e){
+                //    var e = window.event;
+                //}
+                //var target = e.target;
+                //$scope.satus = target.innerHTML;
+                //$scope.getResInfo();
             }
 
             $scope.getNodeList = function(){
                 var url = "ajax/cluster?action=cluster_get_nodelist";
                 $http.get(url).then(function (response) {
-                    //$scope.nodelist =response.data;
-                    alert(response.data.result[0].ip);
+
+                    $scope.nodelist.splice(0, $scope.nodelist.length);
                     for (var i = 0; i < response.data.result.length; i++) {
                         $scope.nodelist.push(response.data.result[i]);
                     }
                 })
             }
-            //$scope.getNodeList();
+            $scope.getNodeList();
 
             $scope.addNode = function(){
-                $uibModal.open({
+                var modalInstance = $uibModal.open({
                     templateUrl: "/wp-content/pages/cluster/templates/addNode.html",
                     controller: "addNodeController",
-                    resolve: {//这是一个入参,这个很重要,它可以把主控制器中的参数传到模态框控制器中
-                        items: function () {//items是一个回调函数
-                            $scope.getNodeList();//这个值会被模态框的控制器获取到
-                        }
-                    }
+                   
                 });
 
-                
             }
 
-            $scope.getResInfo = function () {
+            $scope.getResInfo = function (e) {
+                if (!e) {
+                    var e = window.event;
+                }
+                var target = e.target;
+                $scope.satus = target.innerHTML;
                 var url = "ajax/cluster?action=cluster_getres";
                 $http.get(url).then(function (response) {
-                    $scope.satus = response.data.info;
+                    $scope.info = response.data.info;
                 })
+
             }
             //$scope.getResInfo();
             
-            
+            $scope.remoteHostIP = "127.0.0.1";
+            $scope.remoteProcessResult = "...";
+            $scope.startRemoteProcess = function () {
+                var url = "ajax/cluster?action=cluster_start_process";
+                $http.get(url).then(function (response) {
+                    $scope.remoteProcessResult = response.data.result;
+                })
+            }
             
         }
 

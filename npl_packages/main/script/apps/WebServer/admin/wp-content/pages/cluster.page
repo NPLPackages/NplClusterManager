@@ -16,6 +16,9 @@ Print all url params
 NPL.load("(gl)Mod/NplClusterManager/LocalResourceInfo.lua");
 local LocalResourceInfo = commonlib.gettable("Mod.NplClusterManager.LocalResourceInfo");
 
+NPL.load("(gl)Mod/NplClusterManager/Process.lua");
+local Process = commonlib.gettable("Mod.NplClusterManager.Process");
+
 NPL.load("(gl)script/ide/System/Database/TableDatabase.lua");
 local TableDatabase = commonlib.gettable("System.Database.TableDatabase");
 local db = TableDatabase:new():connect("temp/mydatabase/", function() end);
@@ -26,51 +29,52 @@ local function getNewIP()
 	return newIP or "";
 end
 
-local function getNodeList(re)
-	db.Node:find({ip="127.0.0.1",}, function(err, rows) 
-		re = rows;
-		echo(rows);
-	end);
-	return re;
-end
-
 if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_nodelist', function()
 		LOG.std(nil, "info", "clusrter", "cluster get nodelist");
 		db:EnableSyncMode(true);
 		local err, rows = db.Node:find({});
-		echo(err);
-		echo(rows);
 		wp_send_json({result = rows}, true);
 	end)
 
 	add_action('wp_ajax_cluster_addnode', function()
 		LOG.std(nil, "info", "clusrter", "cluster add node");
-		db.Node:find({ip=newIP,}, function(err, rows)
-			if(#rows == 0) then 
-				db.Node:insertOne(nil, {ip=newIP,}, function(err, data)
-					if(#data ~= 0) then 
-						echo("节点添加成功");
-						wp_send_json({result = "节点添加成功"}, true);
+		
+		response:Begin();
+		db.Node:find({ip=newIP}, function(err, rows)
+			if(#rows == 0) then
+				db.Node:insertOne({ip=newIP}, function(err, data)
+				echo(data);
+					if(data ~= nil) then 
+						response:send({result="节点添加成功"});
 					else
-						echo("节点添加失败，请确认后重试");
-						wp_send_json({result = "节点添加失败，请确认后重试"}, true);
+						response:send({result="节点添加失败，请确认后重试"});
 					end
 				end);
-			else
-				echo("该节点已存在");
-				wp_send_json({result = "该节点已存在"}, true);
+			else 
+				response:send({result="该节点已存在"});
 			end
-		end)
-
-		db:EnableSyncMode(true);
-		local err, rows = db.Node:find({ip=newIP});
-		if(#rows) then 
+		end);
+		response:finish();
 
     end)
 
 	add_action('wp_ajax_cluster_getres', function()
-		
+		LOG.std(nil, "info", "cluster", "cluster get res");
+		response:Begin();
+		--NPL.activate("(gl)Mod/NplClusterManager/");
+		local result = LocalResourceInfo.getLocalResourceInfo();
+		response:send({info=result});
+		--response:send({info="asd"});
+		response:finish();
+	end)
+
+	add_action('wp_ajax_cluster_start_process', function()
+		LOG.std(nil, "info", "cluster", "cluster start process");
+		response:Begin();
+		local re = Process.newProcess();
+		response:send({result=re});
+		response:finish();
 	end)
 
 	return;
@@ -100,3 +104,5 @@ LOG.std(nil, "info", "cluster main", "cluster page init");
 <div ng-app="ClusterManager_App">
 	<cluster-main></cluster-main>
 </div>
+
+<? include("log.page") ?>

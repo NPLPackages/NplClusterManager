@@ -1,15 +1,57 @@
 ﻿<div>
-    <div style="margin:20px 0px">
-        <a ng-click="getNodeList()"><b>节点列表</b></a>
-        <button class="btn btn-primary" ng-click="addNode()" style="float:right;">添加</button>
-        <button class="btn btn-primary" ng-click="getNodeList()" style="float:right;">list</button>
-        <button class="btn btn-primary" ng-click="getResInfo()" style="float:right;">res</button>
-        <button class="btn btn-primary" ng-click="myTest()" style="float:right;">asd</button>
-    </div>
+    <ul id="myTab" class="nav nav-tabs">
+	    <li class="active">
+		    <a href="#node" data-toggle="tab">NODE</a>
+	    </li>
+	    <li>
+            <a href="#process" data-toggle="tab">PROCESS</a>
+	    </li>
+	    <li>
+            <a href="#log" data-toggle="tab">LOG</a>
+	    </li>
+    </ul>
 
-    <li ng-repeat="x in nodelist" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="myTest()">节点-{{x.ip}}</li>
-    <p>{{nodelist}}</p>
-    <p>{{satus}}</p>
+    <div id="myTabContent" class="tab-content">
+	    <div class="tab-pane fade in active" id="node">
+		    <div style="margin:20px 0px">
+                <a ng-click="getNodeList()"><b>节点列表</b></a>
+                <button class="btn btn-primary" ng-click="addNode()" style="float:right;">添加</button>
+            </div>
+            <li ng-repeat="x in nodelist" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="getResInfo(event)">
+                {{x.ip}}
 
-    
+            </li>
+
+            <ul class="pagination">
+	            <li><a href="#">&laquo;</a></li>
+	            <li><a href="#">1</a></li>
+	            <li><a href="#">2</a></li>
+	            <li><a href="#">3</a></li>
+	            <li><a href="#">4</a></li>
+	            <li><a href="#">5</a></li>
+	            <li><a href="#">&raquo;</a></li>
+            </ul>
+
+            <div class="panel panel-default" style="margin-top:100px">
+	            <div class="panel-heading">
+		            <h4 class="panel-title">
+			            {{satus}}详情
+		            </h4>
+	            </div>
+	            <div class="panel-body">
+		            {{info}}
+	            </div>
+            </div>
+	    </div>
+	<div class="tab-pane fade" id="process">
+		<h3>新建进程</h3>
+        远程主机IP： <input type="text" ng-model="remoteHostIP"/>
+        <button class="btn btn-primary" ng-click="startRemoteProcess()">新建</button>
+        <p>{{remoteProcessResult}}</p>
+	</div>
+	<div class="tab-pane fade" id="log">
+		<p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+	</div>
+</div>
+
 </div>

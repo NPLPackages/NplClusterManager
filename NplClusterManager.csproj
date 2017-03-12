@@ -52,7 +52,10 @@
     <None Include="Mod\NplClusterManager\NodeDB.lua" />
     <None Include="Mod\NplClusterManager\NodeServer.lua" />
     <None Include="Mod\NplClusterManager\CmdRunner.lua" />
+    <None Include="Mod\NplClusterManager\Process.lua" />
     <None Include="Mod\NplClusterManager\Test.lua" />
+    <None Include="Mod\NplClusterManager\test.sh" />
+    <None Include="Mod\NplClusterManager\newProcess.bat" />
     <None Include="README.md" />
     <None Include="Run.bat" />
   </ItemGroup>

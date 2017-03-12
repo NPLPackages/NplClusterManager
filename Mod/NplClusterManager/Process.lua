@@ -28,10 +28,10 @@ function Process:newProcess()
 		echo(result);
 	end);
 
-	if(result) then 
-		return "success";
-	else 
+	if(err) then 
 		return "failed";
+	else 
+		return "success";
 	end
 
 end

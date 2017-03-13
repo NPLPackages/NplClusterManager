@@ -11,7 +11,7 @@
                 //alert("asd");
                 //if(!e){
                 //    var e = window.event;
-                //}
+                //}  
                 //var target = e.target;
                 //$scope.satus = target.innerHTML;
                 //$scope.getResInfo();
@@ -58,6 +58,16 @@
                 var url = "ajax/cluster?action=cluster_start_process";
                 $http.get(url).then(function (response) {
                     $scope.remoteProcessResult = response.data.result;
+                })
+            }
+
+            $scope.remoteServerIP = "127.0.0.1";
+            $scope.remoteServerPort = "8099";
+            $scope.remoteServerResult = "...";
+            $scope.startRemoteServer = function () {
+                var url = "ajax/cluster?action=cluster_start_server";
+                $http.get(url).then(function (response) {
+                    $scope.remoteServerResult = response.data.result;
                 })
             }
             

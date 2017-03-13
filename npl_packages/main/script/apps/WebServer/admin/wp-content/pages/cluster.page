@@ -19,6 +19,12 @@ local LocalResourceInfo = commonlib.gettable("Mod.NplClusterManager.LocalResourc
 NPL.load("(gl)Mod/NplClusterManager/Process.lua");
 local Process = commonlib.gettable("Mod.NplClusterManager.Process");
 
+NPL.load("(gl)script/apps/Aries/Creator/Game/Areas/ServerPage.lua");
+local ServerPage = commonlib.gettable("MyCompany.Aries.Creator.Game.Desktop.ServerPage");
+
+NPL.load("(gl)script/apps/Aries/Creator/Game/Network/NetworkMain.lua");
+local NetworkMain = commonlib.gettable("MyCompany.Aries.Game.Network.NetworkMain");
+
 NPL.load("(gl)script/ide/System/Database/TableDatabase.lua");
 local TableDatabase = commonlib.gettable("System.Database.TableDatabase");
 local db = TableDatabase:new():connect("temp/mydatabase/", function() end);
@@ -74,6 +80,15 @@ if(is_ajax()) then
 		response:Begin();
 		local re = Process.newProcess();
 		response:send({result=re});
+		response:finish();
+	end)
+
+	add_action('wp_ajax_cluster_start_server', function()
+		LOG.std(nil, "info", "cluster", "cluster start server");
+		response:Begin();
+		
+		NetworkMain:StartServer("127.0.0.1", "8099");
+		response:send({result="success"});
 		response:finish();
 	end)
 

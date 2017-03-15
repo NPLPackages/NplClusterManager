@@ -10,6 +10,8 @@ NPL.load("(gl)script/ide/commonlib.lua");
 local NodeServer = commonlib.gettable("Mod.NplClusterManager.NodeServer");
 local server_file = "Mod/NplClusterManager/NodeServer.lua";
 local client_file = "Mod/NplClusterManager/NodeClient.lua";
+local process_file = "Mod/NplClusterManager/Process.lua";
+local cmd_file = "Mod/NplClusterManager/CmdRunner.lua";
 
 local isServerInitialized;
 local RequestMethod_Get = "GET";
@@ -21,9 +23,14 @@ NPL.load("(gl)script/ide/System/Database/TableDatabase.lua");
 local TableDatabase = commonlib.gettable("System.Database.TableDatabase");
 local db = TableDatabase:new():connect("temp/mydatabase/", function() end);
 
+NPL.load("(gl)Mod/NplClusterManager/Process.lua");
+local Process = commonlib.gettable("Mod.NplClusterManager.Process");
+
 local function InitServer()
 
 	NPL.AddPublicFile(server_file, 1);
+	NPL.AddPublicFile(process_file, 2);
+	NPL.AddPublicFile(cmd_file, 3);
 	NPL.load("(gl)script/apps/WebServer/WebServer.lua");
 	WebServer:Start("script/apps/WebServer/admin", "0.0.0.0", 8099);
 	ParaGlobal.ShellExecute("open", "http://localhost:8099/cluster", "", "", 1);
@@ -50,6 +57,7 @@ local function activate()
 	end
 	if(msg) then
 		echo(msg);
+		Process.newProcess();
 	end
 
 end

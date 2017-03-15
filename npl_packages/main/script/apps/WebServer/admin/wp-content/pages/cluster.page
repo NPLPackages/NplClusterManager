@@ -25,6 +25,12 @@ local ServerPage = commonlib.gettable("MyCompany.Aries.Creator.Game.Desktop.Serv
 NPL.load("(gl)script/apps/Aries/Creator/Game/Network/NetworkMain.lua");
 local NetworkMain = commonlib.gettable("MyCompany.Aries.Game.Network.NetworkMain");
 
+NPL.load("(gl)script/ide/Encoding.lua");
+local Encoding = commonlib.gettable("commonlib.Encoding");
+
+NPL.load("(gl)script/ide/System/os/os.lua");
+local os = commonlib.gettable("System.os");
+
 NPL.load("(gl)script/ide/System/Database/TableDatabase.lua");
 local TableDatabase = commonlib.gettable("System.Database.TableDatabase");
 local db = TableDatabase:new():connect("temp/mydatabase/", function() end);
@@ -34,6 +40,8 @@ local newIP = request:get("text");
 local function getNewIP()
 	return newIP or "";
 end
+
+local cmd = request:get("cmd");
 
 if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_nodelist', function()
@@ -92,6 +100,30 @@ if(is_ajax()) then
 		response:finish();
 	end)
 
+	add_action('wp_ajax_cluster_get_processlist', function()
+		LOG.std(nil, "info", "cluster", "cluster get process list");
+		response:Begin();
+		
+		NetworkMain:StartServer("127.0.0.1", "8099");
+		response:send({result="success"});
+		response:finish();
+	end)
+
+	add_action('wp_ajax_cluster_cmd', function() 
+		LOG.std(nil, "info", "cluster", "cluster run cmd");
+		response:Begin();
+
+		if(cmd) then
+			local err, re = os.run(cmd);
+			err = commonlib.Encoding.DefaultToUtf8(err);
+			--re = commonlib.Encoding.DefaultToUtf8(re);
+			response:send({result=err});
+		else
+			response:send({result="no valid cmd"});
+		end
+		response:finish();
+	end)
+
 	return;
 end
 
@@ -112,8 +144,6 @@ wp_enqueue_script("ClusterManagerController",		"/wp-content/pages/cluster/contro
 
 LOG.std(nil, "info", "cluster main", "cluster page init");
 ?>
-
-
 
 <div class="title">NPL Cluster Manager</div>
 <div ng-app="ClusterManager_App">

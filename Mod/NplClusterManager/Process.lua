@@ -6,6 +6,8 @@ Desc:
 ]]
 
 NPL.load("(gl)script/ide/commonlib.lua");
+
+NPL.load("(gl)Mod/NplClusterManager/Process.lua");
 local Process = commonlib.gettable("Mod.NplClusterManager.Process");
 
 NPL.load("(gl)script/ide/System/os/os.lua");
@@ -36,11 +38,8 @@ function Process:newProcess()
 
 end
 
-function Process:onWorldLoad()
-	
-end
-
 local function activate()
-	Process.newProcess();
+	echo("connected!");
+	--Process.newProcess();
 end
 NPL.this(activate);

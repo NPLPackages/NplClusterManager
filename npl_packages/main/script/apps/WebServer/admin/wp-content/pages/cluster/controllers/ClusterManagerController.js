@@ -54,9 +54,14 @@
             
             $scope.remoteHostIP = "127.0.0.1";
             $scope.remoteProcessResult = "...";
+            $scope.cmdScript = "dir";
             $scope.startRemoteProcess = function () {
-                var url = "ajax/cluster?action=cluster_start_process";
-                $http.get(url).then(function (response) {
+                //var url = "ajax/cluster?action=cluster_start_process";
+                //$http.get(url).then(function (response) {
+                //    $scope.remoteProcessResult = response.data.result;
+                //})
+
+                $http.put("ajax/cluster?action=cluster_cmd", { cmd: $scope.cmdScript }).then(function (response) {
                     $scope.remoteProcessResult = response.data.result;
                 })
             }
@@ -69,7 +74,10 @@
                 $http.get(url).then(function (response) {
                     $scope.remoteServerResult = response.data.result;
                 })
-            }
+            }   
+
+            
+
             
         }
 

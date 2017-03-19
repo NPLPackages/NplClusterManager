@@ -103,9 +103,12 @@ if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_processlist', function()
 		LOG.std(nil, "info", "cluster", "cluster get process list");
 		response:Begin();
+		local cmd_getProcessList = "wmic process|find \"paraengineclient.exe\" ";
+		local err, re = os.run(cmd_getProcessList);
+		err = Encoding.DefaultToUtf8(err);
+		--re = commonlib.Encoding.DefaultToUtf8(re);
+		response:send({result=err});
 		
-		NetworkMain:StartServer("127.0.0.1", "8099");
-		response:send({result="success"});
 		response:finish();
 	end)
 
@@ -145,7 +148,7 @@ wp_enqueue_script("ClusterManagerController",		"/wp-content/pages/cluster/contro
 LOG.std(nil, "info", "cluster main", "cluster page init");
 ?>
 
-<div class="title">NPL Cluster Manager</div>
+<div class="title">NPL集群管理</div>
 <div ng-app="ClusterManager_App">
 	<cluster-main></cluster-main>
 </div>

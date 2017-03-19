@@ -76,7 +76,16 @@
                 })
             }   
 
-            
+            $scope.processList = "...";
+            $scope.getProcessList = function () {
+                var url = "ajax/cluster?action=cluster_get_processlist";
+                $http.get(url).then(function (response) {
+                    $scope.processList = response.data.result;
+                    var str = ($scope.processList);
+                    alert(str.length);
+                })
+
+            }
 
             
         }

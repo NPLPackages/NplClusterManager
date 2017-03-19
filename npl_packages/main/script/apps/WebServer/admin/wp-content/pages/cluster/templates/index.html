@@ -52,12 +52,14 @@
 </div>
 
 	<div class="tab-pane fade" id="log">
-		<h3>进程列表</h3>
-        {{processList}}
-        主机IP： <input type="text" ng-model="remoteServerIP"/>
-        端口：<input type="text" ng-model="remoteServerPort"/>
-        <button class="btn btn-primary" ng-click="getProcessList()">开启</button>
-        <p>{{remoteServerResult}}</p>
+		进程列表: 
+        <button class="btn btn-primary" ng-click="getProcessList()">新建进程</button>
+        <li ng-repeat="x in processList" style="background:#e0e0e0;margin:10px 0;list-style-type:none;font-size:15px" ng-click="#">
+            {{x}}
+        </li>
+        
+
+        
 	</div>
 </div>
 

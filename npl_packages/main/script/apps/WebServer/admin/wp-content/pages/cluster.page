@@ -42,6 +42,7 @@ local function getNewIP()
 end
 
 local cmd = request:get("cmd");
+local Pid_ToKill = request:get("pid_tokill");
 
 if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_nodelist', function()
@@ -103,12 +104,46 @@ if(is_ajax()) then
 	add_action('wp_ajax_cluster_get_processlist', function()
 		LOG.std(nil, "info", "cluster", "cluster get process list");
 		response:Begin();
-		local cmd_getProcessList = "wmic process|find \"paraengineclient.exe\" ";
+		--local cmd_getProcessList = "wmic process|find \"paraengineclient.exe\" ";
+		--local cmd_getProcessList = "tasklist | find \"paraengineclient.exe\"";
+		local cmd_getProcessList = "tasklist /v |find \"paraengineclient.exe\"";
 		local err, re = os.run(cmd_getProcessList);
 		err = Encoding.DefaultToUtf8(err);
 		--re = commonlib.Encoding.DefaultToUtf8(re);
 		response:send({result=err});
 		
+		response:finish();
+	end)
+
+	add_action('wp_ajax_cluster_kill_process', function()
+		LOG.std(nil, "info", "cluster", "cluster kill process");
+		
+		--local cmd_getProcessList = "wmic process|find \"paraengineclient.exe\" ";
+		--local cmd_getProcessList = "tasklist | find \"paraengineclient.exe\"";
+		if(Pid_ToKill) then 
+			response:Begin();
+			local cmd_killProcess = "taskkill /f /t /pid " .. Pid_ToKill;
+			local err, re = os.run(cmd_killProcess);
+			err = Encoding.DefaultToUtf8(err);
+			--re = commonlib.Encoding.DefaultToUtf8(re);
+			response:send({result=err});
+		
+			response:finish();
+		end
+	end)
+
+	add_action('wp_ajax_cluster_cmd', function() 
+		LOG.std(nil, "info", "cluster", "cluster run cmd");
+		response:Begin();
+
+		if(cmd) then
+			local err, re = os.run(cmd);
+			err = commonlib.Encoding.DefaultToUtf8(err);
+			--re = commonlib.Encoding.DefaultToUtf8(re);
+			response:send({result=err});
+		else
+			response:send({result="no valid cmd"});
+		end
 		response:finish();
 	end)
 
